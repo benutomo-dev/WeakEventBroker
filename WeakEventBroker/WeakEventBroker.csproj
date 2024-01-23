@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net6.0;net8.0</TargetFrameworks>
+    <AssemblyName>Benutomo.WeakEventBroker</AssemblyName>
+    <RootNamespace>Benutomo.WeakEventBroker</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <Choose>
+    <When Condition="'$([MSBuild]::GetTargetFrameworkIdentifier($(TargetFramework)))' == '.NETFramework'" />
+    <When Condition="'$([MSBuild]::GetTargetFrameworkIdentifier($(TargetFramework)))' == '.NETStandard'" />
+    <Otherwise>
+      <!-- <When Condition="'$([MSBuild]::GetTargetFrameworkIdentifier($(TargetFramework)))' == '.NETCoreApp'"> -->
+      <PropertyGroup>
+        <IsAotCompatible>true</IsAotCompatible>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+
+</Project>
