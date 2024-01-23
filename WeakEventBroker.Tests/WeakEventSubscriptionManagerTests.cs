@@ -259,7 +259,7 @@ public class WeakEventSubscriptionManagerTests
         public delegate void OutParamDelegate(int n, out int outValue);
         public static event OutParamDelegate? OutParamEvent;
 
-        public static event Action<int> IntActionEvent;
+        public static event Action<int>? IntActionEvent;
 
 
         public List<EventHandler<EventArgs>> InstanceEventHandlers

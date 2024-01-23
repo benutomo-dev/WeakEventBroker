@@ -1,23 +1,34 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net6.0;net8.0</TargetFrameworks>
-    <AssemblyName>Benutomo.WeakEventBroker</AssemblyName>
+    <AssemblyName>WeakEventBroker</AssemblyName>
     <RootNamespace>Benutomo.WeakEventBroker</RootNamespace>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <LangVersion>latest</LangVersion>
+
+    <IsAotCompatible>true</IsAotCompatible>
+    
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
   </PropertyGroup>
 
-  <Choose>
-    <When Condition="'$([MSBuild]::GetTargetFrameworkIdentifier($(TargetFramework)))' == '.NETFramework'" />
-    <When Condition="'$([MSBuild]::GetTargetFrameworkIdentifier($(TargetFramework)))' == '.NETStandard'" />
-    <Otherwise>
-      <!-- <When Condition="'$([MSBuild]::GetTargetFrameworkIdentifier($(TargetFramework)))' == '.NETCoreApp'"> -->
-      <PropertyGroup>
-        <IsAotCompatible>true</IsAotCompatible>
-      </PropertyGroup>
-    </Otherwise>
-  </Choose>
+  <!-- NuGet -->
+  <PropertyGroup>
+    <PackageVersion>1.0.0</PackageVersion>
+
+    <PackageId>Benutomo.WeakEventBroker</PackageId>
+    <Description>A library to assist event subscription by weak reference.</Description>
+    <Authors>benutomo</Authors>
+    <Copyright>© benutomo.</Copyright>
+    <PackageTags>weak reference;event</PackageTags>
+    <PackageProjectUrl>https://github.com/benutomo-dev/WeakEventBroker</PackageProjectUrl>
+    <RepositoryUrl>$(PackageProjectUrl)</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="docs\readme.md" Pack="true" PackagePath="\"/>
+  </ItemGroup>
 
 </Project>

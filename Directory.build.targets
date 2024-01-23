@@ -1,0 +1,19 @@
+<Project>
+
+  <!-- <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" /> -->
+
+  <!-- NativeAOT対応(.NET以外に対するIsAotCompatibleプロパティの消去) -->
+  <Choose>
+    <When Condition="'$([MSBuild]::GetTargetFrameworkIdentifier($(TargetFramework)))' == '.NETCoreApp'" />
+    <Otherwise>
+      <!-- <When Condition="'$([MSBuild]::GetTargetFrameworkIdentifier($(TargetFramework)))' == '.NETFramework'" /> -->
+      <!-- <When Condition="'$([MSBuild]::GetTargetFrameworkIdentifier($(TargetFramework)))' == '.NETStandard'" /> -->
+      <PropertyGroup>
+        <IsAotCompatible></IsAotCompatible>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+
+  <Import Project="$(MSBuildThisFileFullPath).user" Condition="Exists('$(MSBuildThisFileFullPath).user')"/>
+
+</Project>

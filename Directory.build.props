@@ -1,0 +1,55 @@
+<Project>
+  <!-- <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" /> -->
+
+  <Import Project="$(MSBuildThisFileFullPath).user" Condition="Exists('$(MSBuildThisFileFullPath).user')"/>
+
+  <PropertyGroup>
+    <ProjectwiseSubDirectory>$(MSBuildProjectDirectoryNoRoot.Substring($(MSBuildThisFileDirectoryNoRoot.Length)))</ProjectwiseSubDirectory>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <StrongNameSigningKeyPairFile>$(MSBuildThisFileDirectory)\StrongNameSigningKeyPair.snk</StrongNameSigningKeyPairFile>
+    <StrongNameSingingPublicKeyFile>$(MSBuildThisFileDirectory)\StrongNameSingingPublicKey.snk</StrongNameSingingPublicKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="Exists('$(StrongNameSigningKeyPairFile)')">
+    <SignAssembly>True</SignAssembly>
+    <DelaySign>False</DelaySign>
+    <AssemblyOriginatorKeyFile>$(StrongNameSigningKeyPairFile)</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="!Exists('$(StrongNameSigningKeyPairFile)')">
+    <SignAssembly>True</SignAssembly>
+    <DelaySign>True</DelaySign>
+    <AssemblyOriginatorKeyFile>$(StrongNameSingingPublicKeyFile)</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <Target Name="DelaySignWarning" AfterTargets="CoreBuild">
+    <Warning Text="$(AssemblyName)の厳密名は遅延署名されています。" Condition="'$(DelaySign)' == 'true'"/>
+  </Target>
+  
+  
+  <PropertyGroup>
+    <ProjectsRootDir>$(MSBuildThisFileDirectory)</ProjectsRootDir>
+    <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)obj/$(ProjectwiseSubDirectory)/</BaseIntermediateOutputPath>
+    <BaseOutputPath>$(MSBuildThisFileDirectory)bin/$(ProjectwiseSubDirectory)/</BaseOutputPath>
+  </PropertyGroup>
+
+
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <Deterministic>true</Deterministic>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="InternalReservedAttributeGenerator" Version="0.1.2" PrivateAssets="all" />
+    <PackageReference Include="Benutomo.AutomaticDisposeImpl.SourceGenerator" Version="2.1.3-alpha7" PrivateAssets="all" />
+    <PackageReference Include="Benutomo.AutomaticNotifyPropertyChangedImpl.SourceGenerator" Version="1.0.0-alpha9" PrivateAssets="all" />
+  </ItemGroup>
+  
+  <ItemGroup Condition="'$(TargetFramework)' == 'net46'">
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.0" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+    <PackageReference Include="System.Memory" Version="4.5.5" />
+  </ItemGroup>
+
+</Project>
